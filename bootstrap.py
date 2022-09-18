@@ -4,10 +4,21 @@ from app import Users, Interests
 import json
 
 def create_user():
-    i=Interests (interest=["baseball","quant","coding"])
+
     josh = Users (first_name="Josh", last_name="Smith", grade="Freshman",
-                  school="CAS", gender="Male", major="Computer Science",interests=i)
-    db.session.add(josh)
+                  school="CAS", gender="Male", major="Computer Science")
+    i1 = Interests(interest="baseball", users=josh)
+    i2 = Interests(interest="computer science", users=josh)
+    i3 = Interests(interest="quant", users=josh)
+
+    tony = Users (first_name="Tony", last_name="Harris", grade="Freshman",
+                  school="CAS", gender="Male", major="History")
+    i4 = Interests(interest="history", users=tony)
+    i5 = Interests(interest="quant", users=tony)
+    i6 = Interests(interest="basketball", users=tony)
+
+    db.session.add_all ([josh, tony])
+    db.session.add_all ([i1,i2,i3,i4,i5,i6])
     db.session.commit ()
 def load_data():
     from models import Club
@@ -20,10 +31,15 @@ def load_data():
         data = json.loads(j.read())
 
     for x in range(len(data)):
-        t=Tags (tag=data[x]['tags'])
+
         club = Club (code=data[x]['code'], name=data[x]['name'],
-                     description=data[x]['description'], tags=t)
+                     description=data[x]['description'])
         db.session.add(club)
+
+        for tag_str in data[x]['tags']:
+            t = Tags(tag=tag_str, club=club)
+            db.session.add(t)
+
         db.session.commit()
 
 

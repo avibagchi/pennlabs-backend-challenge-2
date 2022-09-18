@@ -6,12 +6,12 @@ class Club (db.Model):
     name = db.Column (db.String (75), nullable=False)
     description = db.Column (db.String (250), nullable=False)
 
-    tags_id = db.Column(db.Integer, db.ForeignKey('tags.id'), nullable=False)
-    tags = db.relationship ('Tags', backref=db.backref ('clubs',lazy=True))
+    tags = db.relationship ('Tags', backref=db.backref ('club',lazy=True))
     def __repr__(self):
         return '<Club %r>' % self.code
 class Tags (db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    club_id = db.Column(db.Integer, db.ForeignKey('club.id'), nullable=False)
     tag = db.Column(db.String (50), nullable=False)
     def __repr__(self):
         return '<Tags %r>' % self.tag
@@ -25,13 +25,13 @@ class Users (db.Model):
     gender = db.Column(db.String (10), nullable=False)
     major = db.Column(db.String (50), nullable=False)
 
-    interests_id = db.Column(db.Integer, db.ForeignKey('interests.id'), nullable=False)
     interests = db.relationship ('Interests', backref=db.backref ('users',lazy=True))
 
     def __repr__(self):
         return '<Users %r>' % self.first_name
 class Interests (db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     interest = db.Column(db.String (50), nullable=False)
     def __repr__(self):
         return '<Tags %r>' % self.interest
