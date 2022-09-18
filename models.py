@@ -12,9 +12,29 @@ class Club (db.Model):
         return '<Club %r>' % self.code
 class Tags (db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String (50), nullable=False)
+    tag = db.Column(db.String (50), nullable=False)
     def __repr__(self):
-        return '<Tags %r>' % self.name
+        return '<Tags %r>' % self.tag
+
+class Users (db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String (50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    grade = db.Column(db.String (5), nullable=False)
+    school = db.Column(db.String (50), nullable=False)
+    gender = db.Column(db.String (10), nullable=False)
+    major = db.Column(db.String (50), nullable=False)
+
+    interests_id = db.Column(db.Integer, db.ForeignKey('interests.id'), nullable=False)
+    interests = db.relationship ('Interests', backref=db.backref ('users',lazy=True))
+
+    def __repr__(self):
+        return '<Users %r>' % self.first_name
+class Interests (db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    interest = db.Column(db.String (50), nullable=False)
+    def __repr__(self):
+        return '<Tags %r>' % self.interest
 
 
 # Your database models should go here.
