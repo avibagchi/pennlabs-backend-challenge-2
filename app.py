@@ -45,21 +45,41 @@ def find_user ():
     if request.method=="POST":
         user = Users.query.filter_by(first_name=request.form.get ("fname")).first ()
         return "First Name: " + str (user.first_name) + "School: "+ \
-               str (user.school) + "Major: "+ \
-               str (user.major)
+               str (user.school) + "Major: "+ str (user.major)
     return render_template("find_user.html")
 
-@app.route ('/api/<club_name>')
-def find_club (club_name):
-    return jsonify (Club.query.filter(Club.name.contains ('club_name')))
+@app.route ('/api/findclub', methods = ['POST', 'GET'])
+def find_club ():
+    arr=[]
+    if request.method=="POST":
+        club_list = Club.query
+        club_list = club_list.filter (Club.name.like ("%" + request.form.get ("cname") + "%")).all()
+        for club in club_list:
+            arr.append ("Code: " + str (club.code) + "Name: "+ \
+                   str (club.name) + "Description: " + str (club.description))
+        return " ".join (arr)
+    return render_template("find_club.html")
 
-@app.route ("/api/add_club", methods=["POST","GET"])
+@app.route ("/api/addclub", methods=["POST","GET"])
 def add_club ():
     if request.method == "POST":
-        user=request.form ["nm"]
-        return redirect (url_for("clubs"),usr=user)
-    else:
-        return render_template ("add_club.html")
+        print ("WE ARE IN POST")
+        club = Club(code=request.form.get("cc"), name=request.form.get("cn"),
+                    description=request.form.get("cd"))
+        db.session.add(club)
+        tag_list = []
+        tag_list.append (request.form.get("ct1"))
+        tag_list.append (request.form.get("ct2"))
+        tag_list.append (request.form.get("ct3"))
+
+        for tag_str in tag_list:
+            t = Tags(tag=tag_str, club=club)
+            db.session.add(t)
+        db.session.commit()
+        return str(request.form.get("cn")) + " added!"
+    return render_template("add_club.html")
+
+
 
 
 if __name__ == '__main__':
