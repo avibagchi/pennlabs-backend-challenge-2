@@ -17,6 +17,7 @@ Fill out this section as you complete the challenge!
 - `app.py`: Main file. Has configuration and setup at the top. Add your [URL routes](https://flask.palletsprojects.com/en/1.1.x/quickstart/#routing) to this file!
 - `models.py`: Model definitions for SQLAlchemy database models. Check out documentation on [declaring models](https://flask-sqlalchemy.palletsprojects.com/en/2.x/models/) as well as the [SQLAlchemy quickstart](https://flask-sqlalchemy.palletsprojects.com/en/2.x/quickstart/#quickstart) for guidance
 - `bootstrap.py`: Code for creating and populating your local database. You will be adding code in this file to load the provided `clubs.json` file into a database.
+- `templates` directory with 9 HTML templates listed below.  
 
 ## Developing
 
@@ -64,4 +65,13 @@ run `pipenv install <package_name>` within the directory. Make sure to document 
 8. `/signup` `signup ()`: Feature I choose to create. It allows users to create an account that will be stored in the database. Users can type in their `interests` and `favorites` that will be associated with their profile. 
 9. Areas to improve/didn't have time to do: Fix bug with login page, printing formatting is jumbled as I didn't have time to make html templates for every route, add roles so different kinds of users can access different routes, improve security with passwords.
 
-
+## HTML Templates
+0. `add_club.html`
+1. `clubs.html`
+2. `favorites.html`
+3. `filter.html`
+4. `find_club.html`
+5. `find_user.html`
+6. `login.html`
+7. `modify_club.html`
+8. `signup.html`
