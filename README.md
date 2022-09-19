@@ -39,7 +39,15 @@ run `pipenv install <package_name>` within the directory. Make sure to document 
 0. json
 1. Flask --> request, jsonify, render_template, url_for, redirect
 
-## app.py: Routes
+## models.py
+0. `Club`: Attributes--`id` (primary key), `code`, `name`, `description`, `fav_counter` (# of user favorites a club has), `tags`. To avoid storing arrays in the database, a seperate model `Tags` was created that was linked to `Club` via a ForeignKey. 
+1. `Tag`: Relationship with  `Club`. Attributes--`id` (primary key), `club_id` (ForeignKey), `tag` (name of the tag).
+2.  `Users`: Attributes--`id` (primary key), `first_name`, `last_name`, `grade`, `school` (within the university), `gender`, `major`, `interests`, `favorites`. `interests` and `favorites` are arrays, so again, seperate models `Interests` and `Favorites` were created that were linked to `Users` via a ForeignKey. 
+3.  `Interests`: Relationship with `Users`. Attributes--`id` (primary key), `users_id` (ForeignKey), `interest` (name of the interest). The purpose of this class is to link certain interests (ie. sports, coding etc.) with a user so in the future, we can suggest certain clubs for them through filtering. 
+4.  `Favorites`: Relationship with `Users`. Attributes--`id` (primary key), `users_id` (ForeignKey), `favorite` (name of the favorite). Favorites links what clubs a user has marked as favorite to that user's profile. See `fav_club ()`.
+5.  Areas to improve/didn't have time to do: Add more attributes, tailor user entries to the variable (ie. more drop downs instead of all fill in the blank). 
+
+## app.py
 0. `/api/clubs` `clubs ()`: Re-constructs `clubs.json` by starting with an empty list, and then appending a json object for every club name. 
 1. `/api/finduser` `find_user ()`: Enter first name of a user registered in the database, outputs school and major.
 2. `/api/findclub` `find_club ()`: Enter part of a club name, output is club code, description, and how many favorites it has
@@ -50,3 +58,5 @@ run `pipenv install <package_name>` within the directory. Make sure to document 
 7. `/api/filter` `filter ()`: Filters tag objects by the club they are associated with. Possible bug.
 8. `/signup` `signup ()`: Feature I choose to create. It allows users to create an account that will be stored in the database. Users can type in their `interests` and `favorites` that will be associated with their profile. 
 9. Areas to improve/didn't have time to do: Fix bug with login page, printing formatting is jumbled as I didn't have time to make html templates for every route, add roles so different kinds of users can access different routes, improve security with passwords.
+
+
