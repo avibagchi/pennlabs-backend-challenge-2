@@ -47,6 +47,11 @@ run `pipenv install <package_name>` within the directory. Make sure to document 
 4.  `Favorites`: Relationship with `Users`. Attributes--`id` (primary key), `users_id` (ForeignKey), `favorite` (name of the favorite). Favorites links what clubs a user has marked as favorite to that user's profile. See `fav_club ()`.
 5.  Areas to improve/didn't have time to do: Add more attributes, tailor user entries to the variable (ie. more drop downs instead of all fill in the blank). 
 
+## bootstrap.py
+0. `create_user ()`: Creates 4  `Users` objects josh, tony, jeff, avi which are associated with `User` attributes listed above. Added to database for testing. 
+1. `load_data ()`: Loads the club data from `clubs.json` as `Club` objects. `Tags` objects are created seperately but they are linked to `Club` with the `club` paramter. 
+2. Areas to improve/didn't have time to do: first names are lower case because I suspected case sensitivity was the root of `login ()` error mentioned below.
+
 ## app.py
 0. `/api/clubs` `clubs ()`: Re-constructs `clubs.json` by starting with an empty list, and then appending a json object for every club name. 
 1. `/api/finduser` `find_user ()`: Enter first name of a user registered in the database, outputs school and major.
