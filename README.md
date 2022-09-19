@@ -58,7 +58,7 @@ run `pipenv install <package_name>` within the directory. Make sure to document 
 1. `/api/finduser` `find_user ()`: Enter first name of a user registered in the database, outputs school and major.
 2. `/api/findclub` `find_club ()`: Enter part of a club name, output is club code, description, and how many favorites it has
 3. `/api/addclub` `add_club ()`: Enter Club attributes, new club object is added to the database. 
-4. `/login/` `login ()`: Enter first name that is in the database (see `signup`), redirects to `fav_club`. This is one example of a way a user can store their personal data. However, there is a bug in the redirect call that I did not have time to fix.
+4. `/login/` `login ()`: Enter first name that is in the database (see `signup`), redirects to `fav_club` if it is indeed in the database. This is one example of a way a user can store their personal data. However, there is a bug in the redirect call that I did not have time to fix.
 5. `/favclub/<username>` `fav_club ()`: Redirects to this route once you login. Again, there is some issue with the redirect/dynamic routing that I did not have time to fix. 
 6. `/api/modifyclub` `modify_club`: Enter club code that is the club to be modified. Tags are the only mutable attributes that a user can change. In the future, I will make admin roles where club leaders can change other attributes of their club.
 7. `/api/filter` `filter ()`: Filters tag objects by the club they are associated with. Possible bug.
@@ -78,4 +78,4 @@ run `pipenv install <package_name>` within the directory. Make sure to document 
 
 ## TODO
 0. Didn't have time, but for webscraping use `BeautifulSoup` to extract the HTML tags associated with the attributes of a `Club` object. 
-1. Resolve `login ()` bug.
+1. Resolve `login ()` bug. Rather than trying to match an inputted name with a registered name in the database, we can use `sessions` for a proper log-in. 
