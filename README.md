@@ -39,7 +39,7 @@ run `pipenv install <package_name>` within the directory. Make sure to document 
 0. json
 1. Flask --> request, jsonify, render_template, url_for, redirect
 
-##app.py: Routes
+## app.py: Routes
 0. `/api/clubs` `clubs ()`: Re-constructs `clubs.json` by starting with an empty list, and then appending a json object for every club name. 
 1. `/api/finduser` `find_user ()`: Enter first name of a user registered in the database, outputs school and major.
 2. `/api/findclub` `find_club ()`: Enter part of a club name, output is club code, description, and how many favorites it has
