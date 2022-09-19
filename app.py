@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify, render_template, url_for, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 import json
-import json2html
 
 DB_FILE = "clubreview.db"
 
@@ -21,17 +20,17 @@ def api():
     return jsonify({"message": "Welcome to the Penn Club Review API!."})
 
 @app.route('/api/clubs')
-def clubs ():
+def clubs():
     data=[]
     count=0
-    tag_arr = []
+    tag_arr = [] #only used if you uncomment below
     for x in range (len (Club.query.all())):
         data.append ({})
 
     for club_obj in Club.query.all():
-        data [count] ['name']=club_obj.name
+        data[count]['name'] = club_obj.name
         json_data = json.dumps(data)
-        count+=1
+        count += 1
     return render_template("clubs.html", data=json_data)
     #Uncomment below if you want other attributes displayed:
     #data [x] ['code']=club_obj.code
@@ -41,24 +40,24 @@ def clubs ():
     #data [x]['tags']=tag_arr
 
 @app.route('/api/finduser', methods = ['POST', 'GET'])
-def find_user ():
-    if request.method=="POST":
-        user = Users.query.filter_by(first_name=request.form.get ("fname")).first ()
-        return "First Name: " + str (user.first_name) + "School: "+ \
-               str (user.school) + "Major: "+ str (user.major)
+def find_user():
+    if request.method == "POST":
+        user = Users.query.filter_by(first_name=request.form.get("fname")).first()
+        return "First Name: " + str(user.first_name) + "School: " + \
+               str(user.school) + "Major: "+str (user.major)
     return render_template("find_user.html")
 
 @app.route ('/api/findclub', methods = ['POST', 'GET'])
-def find_club ():
+def find_club():
     arr=[]
     if request.method=="POST":
         club_list = Club.query
         club_list = club_list.filter (Club.name.like ("%" + request.form.get ("cname") + "%")).all()
         for club in club_list:
-            arr.append ("Code: " + str (club.code) + "Name: "+ \
+            arr.append("Code: " + str (club.code) + "Name: " + \
                         str (club.name) + "Description: " + str (club.description) + \
                         "Favorite Counter: "+str (club.fav_counter))
-        return " ".join (arr)
+        return " ".join(arr)
     return render_template("find_club.html")
 
 @app.route ("/api/addclub", methods=["POST","GET"])

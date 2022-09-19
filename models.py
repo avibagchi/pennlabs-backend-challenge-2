@@ -7,7 +7,6 @@ class Club (db.Model):
     description = db.Column (db.String (250), nullable=False)
     fav_counter = db.Column(db.Integer, default=0)
 
-
     tags = db.relationship ('Tags', backref=db.backref ('club',lazy=True))
     def __repr__(self):
         return '<Club %r>' % self.code
