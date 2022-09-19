@@ -38,7 +38,7 @@ run `pipenv install <package_name>` within the directory. Make sure to document 
 
 ## Packages
 0. json
-1. Flask --> request, jsonify, render_template, url_for, redirect
+1. Flask: request, jsonify, render_template, url_for, redirect
 
 ## models.py
 0. `Club`: Attributes--`id` (primary key), `code`, `name`, `description`, `fav_counter` (# of user favorites a club has), `tags`. To avoid storing arrays in the database, a seperate model `Tags` was created that was linked to `Club` via a ForeignKey. 
