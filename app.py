@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, url_for, redirect
+from flask import Flask, request, jsonify, render_template, url_for, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 import json
 import json2html
@@ -56,14 +56,14 @@ def find_club ():
         club_list = club_list.filter (Club.name.like ("%" + request.form.get ("cname") + "%")).all()
         for club in club_list:
             arr.append ("Code: " + str (club.code) + "Name: "+ \
-                   str (club.name) + "Description: " + str (club.description))
+                        str (club.name) + "Description: " + str (club.description) + \
+                        "Favorite Counter: "+str (club.fav_counter))
         return " ".join (arr)
     return render_template("find_club.html")
 
 @app.route ("/api/addclub", methods=["POST","GET"])
 def add_club ():
     if request.method == "POST":
-        print ("WE ARE IN POST")
         club = Club(code=request.form.get("cc"), name=request.form.get("cn"),
                     description=request.form.get("cd"))
         db.session.add(club)
@@ -79,8 +79,55 @@ def add_club ():
         return str(request.form.get("cn")) + " added!"
     return render_template("add_club.html")
 
+@app.route ("/login/", methods=["POST","GET"])
+def login ():
+    if request.method=="POST":
+        name = request.form.get ("fname")
+        user = Users.query.filter_by(first_name=name).first ()
+        name=name.lower ()
+        print (name)
 
+        return redirect(url_for("fav_club", username=name))
 
+    return render_template("login.html")
+
+#@app.route('/api/favclub', defaults={'id': None}, methods=["POST","GET"])
+@app.route ("/favclub/<username>", methods=["POST","GET"])
+def fav_club (username):
+    if request.method == "POST":
+        club = Club.query.filter_by(code=request.form.get ("fccode")).first ()
+        club.fav_counter += 1
+        user = Users.query.filter_by(first_name=request.form.get(username)).first()
+        fav = Favorites(favorite=club, users=user)
+        db.session.commit()
+        return "Added Favorite!"
+    else:
+        return render_template("favorites.html")
+
+@app.route ("/api/modifyclub", methods=["POST","GET"])
+def modify_club ():
+    if request.method == "POST":
+        club = Club.query.filter_by (code=request.form.get("cc").first ())
+        tag_list = []
+        tag_list.append (request.form.get("ct1"))
+        tag_list.append (request.form.get("ct2"))
+        tag_list.append (request.form.get("ct3"))
+
+        for tag_str in tag_list:
+            t = Tags.query.filter_by (tag=tag_str, club=club).first()
+            t.tag=tag_str
+
+        db.session.commit()
+        return str(request.form.get("cc")) + " tags modified!"
+    return render_template("modify_club.html")
+
+@app.route ("/api/filter", methods=["POST","GET"])
+def filter ():
+    s= ""
+    clubs = Club.query.all ()
+    for club in clubs:
+        s + str (Tags.query.filter_by(club=club).first().tag) +"\n"
+    return render_template("filter.html", s=s)
 
 if __name__ == '__main__':
     app.run()

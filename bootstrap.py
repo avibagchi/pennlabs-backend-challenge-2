@@ -1,24 +1,45 @@
 import os
 from app import db, DB_FILE
-from app import Users, Interests
+from app import Users, Interests, Favorites
 import json
 
 def create_user():
 
-    josh = Users (first_name="Josh", last_name="Smith", grade="Freshman",
+    josh = Users (first_name="josh", last_name="Smith", grade="Freshman",
                   school="CAS", gender="Male", major="Computer Science")
     i1 = Interests(interest="baseball", users=josh)
     i2 = Interests(interest="computer science", users=josh)
     i3 = Interests(interest="quant", users=josh)
 
-    tony = Users (first_name="Tony", last_name="Harris", grade="Freshman",
+    tony = Users (first_name="tony", last_name="Harris", grade="Freshman",
                   school="CAS", gender="Male", major="History")
     i4 = Interests(interest="history", users=tony)
     i5 = Interests(interest="quant", users=tony)
     i6 = Interests(interest="basketball", users=tony)
 
-    db.session.add_all ([josh, tony])
-    db.session.add_all ([i1,i2,i3,i4,i5,i6])
+    jeff = Users(first_name="jeff", last_name="Brown", grade="Freshman",
+                 school="CAS", gender="Male", major="History")
+    i7 = Interests(interest="history", users=jeff)
+    i8 = Interests(interest="quant", users=jeff)
+    i9 = Interests(interest="basketball", users=jeff)
+
+    f1 = Favorites (favorite="pppjo", users=jeff)
+    f2 = Favorites (favorite="lorem-ipsum", users=jeff)
+
+    avi = Users(first_name="avi", last_name="Bagchi", grade="Freshman",
+                 school="CAS", gender="Male", major="CS")
+    i7 = Interests(interest="baseball", users=jeff)
+    i8 = Interests(interest="quant", users=jeff)
+    i9 = Interests(interest="basketball", users=jeff)
+
+    f1 = Favorites (favorite="pppjo", users=jeff)
+    f2 = Favorites (favorite="lorem-ipsum", users=jeff)
+
+
+
+    db.session.add_all ([josh, tony, jeff])
+    db.session.add_all ([i1,i2,i3,i4,i5,i6,i7,i8,i9])
+    db.session.add_all([f1, f2])
     db.session.commit ()
 def load_data():
     from models import Club
@@ -33,7 +54,8 @@ def load_data():
     for x in range(len(data)):
 
         club = Club (code=data[x]['code'], name=data[x]['name'],
-                     description=data[x]['description'])
+                     description=data[x]['description'], fav_counter=0)
+
         db.session.add(club)
 
         for tag_str in data[x]['tags']:
@@ -41,7 +63,6 @@ def load_data():
             db.session.add(t)
 
         db.session.commit()
-
 
 # No need to modify the below code.
 if __name__ == '__main__':

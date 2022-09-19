@@ -5,6 +5,8 @@ class Club (db.Model):
     code = db.Column(db.String (50), nullable=False)
     name = db.Column (db.String (75), nullable=False)
     description = db.Column (db.String (250), nullable=False)
+    fav_counter = db.Column(db.Integer, default=0)
+
 
     tags = db.relationship ('Tags', backref=db.backref ('club',lazy=True))
     def __repr__(self):
@@ -26,6 +28,7 @@ class Users (db.Model):
     major = db.Column(db.String (50), nullable=False)
 
     interests = db.relationship ('Interests', backref=db.backref ('users',lazy=True))
+    favorites =db.relationship ('Favorites', backref=db.backref ('users',lazy=True))
 
     def __repr__(self):
         return '<Users %r>' % self.first_name
@@ -34,7 +37,13 @@ class Interests (db.Model):
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     interest = db.Column(db.String (50), nullable=False)
     def __repr__(self):
-        return '<Tags %r>' % self.interest
+        return '<Interests %r>' % self.interest
+class Favorites (db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    favorite = db.Column(db.String (50))
+    def __repr__(self):
+        return '<Favorites %r>' % self.favorite
 
 
 # Your database models should go here.

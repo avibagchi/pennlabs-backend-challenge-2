@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find a Club!</title>
+</head>
+<body>
+    <form action="{{ url_for('fav_club') }}" method="post">
+        <label for="club">Favorite Club Code:</label>
+        <input type="text" id="club" name="fccode" placeholder="favclubcode">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
