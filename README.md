@@ -76,6 +76,7 @@ run `pipenv install <package_name>` within the directory. Make sure to document 
 7. `modify_club.html`
 8. `signup.html`
 
-## TODO
+## TODO and Comments
 0. Didn't have time, but for webscraping use `BeautifulSoup` to extract the HTML tags associated with the attributes of a `Club` object. 
 1. Resolve `login ()` bug. Rather than trying to match an inputted name with a registered name in the database, we can use `sessions` for a proper log-in. 
+2. Due to the bug in the login, all of the other features can be accessed without login. If there was no bug, I would have made many of the features a `redirect` from the root login page. 
