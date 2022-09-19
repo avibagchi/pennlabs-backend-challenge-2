@@ -6,8 +6,8 @@
 </head>
 <body>
     <form action="{{ url_for('fav_club') }}" method="post">
-        <label for="club">Favorite Club Code:</label>
-        <input type="text" id="club" name="fccode" placeholder="favclubcode">
+        <label for="club_fav">Favorite Club Code:</label>
+        <textarea rows="1" cols="7" id="club_fav" name="fccode" placeholder="favclubcode"></textarea>
         <button type="submit">Submit</button>
     </form>
 </body>

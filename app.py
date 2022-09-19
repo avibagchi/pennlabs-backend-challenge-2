@@ -5,6 +5,7 @@ import json
 DB_FILE = "clubreview.db"
 
 app = Flask(__name__)
+app.secret_key = 'PennLabs'
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{DB_FILE}"
 db = SQLAlchemy(app)
 
@@ -82,26 +83,33 @@ def add_club ():
 def login ():
     if request.method=="POST":
         name = request.form.get ("fname")
-        user = Users.query.filter_by(first_name=name).first ()
-        name=name.lower ()
+        #username=name.lower ()
         print (name)
+        session ['name']=name
 
-        return redirect(url_for("fav_club", username=name))
+        user = Users.query.filter_by(first_name=name).first()
+
+        if user != None:
+            return redirect("/favclub/")
+        else:
+            return "Invalid Credentials"
 
     return render_template("login.html")
 
 #@app.route('/api/favclub', defaults={'id': None}, methods=["POST","GET"])
-@app.route ("/favclub/<username>", methods=["POST","GET"])
-def fav_club (username):
+@app.route ("/favclub/", methods=["POST","GET"])
+def fav_club ():
+    name = request.args['name']
+    name = session['name']
     if request.method == "POST":
         club = Club.query.filter_by(code=request.form.get ("fccode")).first ()
         club.fav_counter += 1
-        user = Users.query.filter_by(first_name=request.form.get(username)).first()
+        user = Users.query.filter_by(first_name=name).first()
+        print (user)
         fav = Favorites(favorite=club, users=user)
         db.session.commit()
         return "Added Favorite!"
-    else:
-        return render_template("favorites.html")
+    return render_template("favorites.html")
 
 @app.route ("/api/modifyclub", methods=["POST","GET"])
 def modify_club ():
