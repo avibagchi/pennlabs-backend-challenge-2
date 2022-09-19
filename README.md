@@ -75,3 +75,7 @@ run `pipenv install <package_name>` within the directory. Make sure to document 
 6. `login.html`
 7. `modify_club.html`
 8. `signup.html`
+
+## TODO
+0. Didn't have time, but for webscraping use `BeautifulSoup` to extract the HTML tags associated with the attributes of a `Club` object. 
+1. Resolve `login ()` bug.
