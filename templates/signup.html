@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a Club!</title>
+</head>
+<body>
+    <form action="{{ url_for('signup') }}" method="post">
+
+        <label for="first_name">First Name:</label>
+        <textarea rows="1" cols="7" id="first_name" name="fn" placeholder="first_name"></textarea>
+
+        <label for="last_name">Last Name:</label>
+        <textarea rows="1" cols="7" id="last_name" name="ln" placeholder="last_name"></textarea>
+
+        <label for="grade">Grade:</label>
+        <textarea rows="1" cols="7" id="grade" name="gr" placeholder="grade"></textarea>
+
+        <label for="School">School:</label>
+        <textarea rows="1" cols="7" id="School" name="s" placeholder="School"></textarea>
+
+        <p>
+        <label for="Gender">Gender:</label>
+        <textarea rows="1" cols="7" id="Gender" name="ge" placeholder="Gender"></textarea>
+        </p>
+
+        <label for="Major">Major:</label>
+        <textarea rows="1" cols="7" id="Major" name="m" placeholder="Major"></textarea>
+
+        <p>
+        <label for="interest_tag_1">Interest 1:</label>
+        <textarea rows="1" cols="7" id="interest_tag_1" name="i1" placeholder="interest1"></textarea>
+
+
+        <label for="interest_tag_2">Interest 2:</label>
+        <textarea rows="1" cols="7" id="interest_tag_2" name="i2" placeholder="interest2"></textarea>
+
+
+        <label for="interest_tag_3">Interest 3:</label>
+        <textarea rows="1" cols="7" id="interest_tag_3" name="i3" placeholder="interest3"></textarea>
+        </p>
+
+        <p>
+        <label for="fav_tag_1">Favorite 1:</label>
+        <textarea rows="1" cols="7" id="fav_tag_1" name="f1" placeholder="fav1"></textarea>
+
+
+        <label for="fav_tag_2">Favorite 2:</label>
+        <textarea rows="1" cols="7" id="fav_tag_2" name="f2" placeholder="fav2"></textarea>
+
+        <label for="fav_tag_3">Favorite 3:</label>
+        <textarea rows="1" cols="7" id="fav_tag_3" name="f3" placeholder="fav3"></textarea>
+        </p>
+        <p>
+        <button type="submit">Submit</button>
+        </p>
+    </form>
+</body>
+</html>

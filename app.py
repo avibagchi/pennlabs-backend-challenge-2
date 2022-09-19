@@ -129,5 +129,28 @@ def filter ():
         s + str (Tags.query.filter_by(club=club).first().tag) +"\n"
     return render_template("filter.html", s=s)
 
+@app.route ("/signup", methods=["POST","GET"])
+def signup ():
+    if request.method == "POST":
+        user = Users(first_name=request.form.get("fn"), last_name=request.form.get("ln"),
+                     grade=request.form.get("gr"), school=request.form.get("s"),
+                     gender=request.form.get("ge"), major=request.form.get("m"))
+        i1 = Interests(interest=request.form.get("i1"), users=user)
+        i2 = Interests(interest=request.form.get("i2"), users=user)
+        i3 = Interests(interest=request.form.get("i3"), users=user)
+
+        f1 = Favorites(favorite=request.form.get("f1"), users=user)
+        f2 = Favorites(favorite=request.form.get("f2"), users=user)
+        f3 = Favorites(favorite=request.form.get("f3"), users=user)
+
+        db.session.add_all([user])
+        db.session.add_all([i1, i2, i3])
+        db.session.add_all([f1, f2, f3])
+        db.session.commit()
+
+        return "<p> User Added! </p>"
+
+    return render_template("signup.html")
+
 if __name__ == '__main__':
     app.run()
